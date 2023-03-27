@@ -7,6 +7,7 @@ import ru.netology.qa.TicketManager;
 import ru.netology.qa.TicketRepository;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class TicketManagerTest {
     TicketRepository repository = new TicketRepository();
@@ -60,6 +61,17 @@ public class TicketManagerTest {
 
         Ticket[] expected = {ticket1};
         Ticket[] actual = manager.findAll("DME","LED");
+
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldSortByComparator() {
+        Comparator<Ticket> comparator = new TicketByPriceAscComparator();
+
+        Ticket[] expected = {ticket5, ticket8,ticket2, ticket7,ticket9};;
+        Ticket[] actual = manager.findAll("LED","ULV",comparator);
 
         Assertions.assertArrayEquals(expected, actual);
 
